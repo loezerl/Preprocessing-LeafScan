@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from skimage.filters import threshold_otsu
 from copy import deepcopy
-
+from skimage.morphology import square
+from skimage.morphology import white_tophat
+from skimage.morphology import black_tophat
 
 img = misc.imread("teste.jpg")
 
@@ -23,16 +25,17 @@ for rownum in range(len(img)):
 thresh = threshold_otsu(grey)
 binary = grey > thresh
 
-fig, axes = plt.subplots(ncols = 3)
+fig, axes = plt.subplots(ncols = 5)
 ax = axes.ravel()
 
 ax[0].imshow(img)
 ax[0].set_title('Original')
 
-ax[1].imshow(binary, cmap = plt.cm.gray)
-ax[1].set_title('Binarizada')
+ax[1].imshow(grey, cmap = plt.cm.gray)
+ax[1].set_title('Grey Level')
 
-print(len(binary[0]))
+ax[2].imshow(binary, cmap = plt.cm.gray)
+ax[2].set_title('Otsu')
 
 newimg = deepcopy(img)
 
@@ -45,8 +48,14 @@ for i in range(len(binary)):
             newimg[i][k] = [255, 255, 255]
         
 
-ax[2].imshow(newimg)
-ax[2].set_title('Otsu + Original Img')
+
+newnewimg = black_tophat(newimg)
+
+ax[3].imshow(newimg)
+ax[3].set_title('Result')
+
+ax[4].imshow(newnewimg)
+ax[4].set_title('Black Tophat')
 
 for a in ax:
     a.axis('off')
