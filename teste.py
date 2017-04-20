@@ -1,5 +1,4 @@
 from skimage.color import rgb2gray
-from skimage import data
 from scipy import misc
 import numpy as np 
 import matplotlib.pyplot as plt
